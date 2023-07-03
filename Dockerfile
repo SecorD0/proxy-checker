@@ -1,8 +1,8 @@
-FROM python:3.9.7-slim
+FROM python:3.8-slim
 
 WORKDIR /program
 
-COPY requirements.txt .
+COPY . .
 RUN apt-get update; \
     apt-get install git -y; \
     apt-get clean; \

@@ -1,4 +1,4 @@
-<h1><p align="center">proxy-checker</p></h1><h1>
+<h1><p align="center">proxy-checker</p></h1>
 
 <p align="center"><img src="images/icons/app.ico" width="400"></p>
 
@@ -12,8 +12,15 @@
 - [File structure](#File-structure)
 - [How to run](#How-to-run)
     - [Windows](#Windows)
-    - [Docker](#Docker)
+    - [Docker (building)](#Docker-building)
+    - [Docker (image)](#Docker-image)
     - [Source code](#Source-code)
+- [Updating](#Updating)
+  - [Windows](#Windows-1)
+  - [GitHub image](#GitHub-image)
+  - [Self-built image](#Self-built-image)
+  - [Source code](#Source-code-1)
+- [Useful commands](#Useful-commands)
 - [Report a bug or suggest an idea](#Report-a-bug-or-suggest-an-idea)
 - [Express your gratitude](#Express-your-gratitude)
 
@@ -88,9 +95,9 @@
 ⠀The program use the following files and directories:
 - `files` — a user files directory:
   - `errors.log` — a log file with errors that occurred during the work;
-  - `proxies.txt` — a text file with proxies to check.
-  - `results.xlsx` — an Excel spreadsheet with results of checking.
-  - `settings.json` — a JSON file for program setup.
+  - `proxies.txt` — a text file with proxies to check;
+  - `results.xlsx` — an Excel spreadsheet with results of checking;
+  - `settings.json` — a JSON file for program setup;
   - `temp.db` — a temporary database to save the state.
 - `proxy-checker.exe` / `app.py` — an executable file that runs the program.
 
@@ -98,6 +105,7 @@
 
 <h1><p align="center">How to run</p></h1>
 <p align="right"><a href="#Content">To the content</a></p>
+
 
 <h2><p align="center">Windows</p></h2>
 
@@ -110,17 +118,46 @@ username:password@ip:port
 ip:port:username:password
 ```
 5. Configure the `settings.json`:
-- `threads` — the number of threads;
-- `timeout` — request timeout when checking the availability of the site;
-- `proxies_type` — a proxies type (either `http` or `socks5`);
-- `parse_ip_info` — whether to parse IP information (either `true` or `false`);
-- `parse_provider_info` — whether to parse Internet service provider information (either `true` or `false`);
-- `check_accessibility` — list of sites to check for accessibility.
+   - `threads` — the number of threads;
+   - `timeout` — request timeout when checking the availability of the site;
+   - `proxies_type` — a proxies type (either `http` or `socks5`);
+   - `parse_ip_info` — whether to parse IP information (either `true` or `false`);
+   - `parse_provider_info` — whether to parse Internet service provider information (either `true` or `false`);
+   - `check_accessibility` — list of sites to check for accessibility.
 6. Run the program again and wait until it's finished.
 7. Open the `result.xlsx` file and look at the result of the program.
 
 
-<h2><p align="center">Docker</p></h2>
+<h2><p align="center">Docker (image)</p></h2>
+
+1. Install Docker, in Ubuntu you can use the command:
+```sh
+. <(wget -qO- https://raw.githubusercontent.com/SecorD0/utils/main/installers/docker.sh)
+```
+2. Run the program the first time to create necessary files:
+```sh
+docker run -it --rm -v $HOME/proxy-checker/files:/program/files --name proxy-checker ghcr.io/secord0/proxy-checker:main
+```
+3. Insert proxies into the `proxies.txt` file in one of the following formats:
+```
+username:password@ip:port
+ip:port:username:password
+```
+4. Configure the `settings.json`:
+   - `threads` — the number of threads;
+   - `timeout` — request timeout when checking the availability of the site;
+   - `proxies_type` — a proxies type (either `http` or `socks5`);
+   - `parse_ip_info` — whether to parse IP information (either `true` or `false`);
+   - `parse_provider_info` — whether to parse Internet service provider information (either `true` or `false`);
+   - `check_accessibility` — list of sites to check for accessibility.
+5. Run the program again and wait until it's finished:
+```sh
+docker run -it --rm -v $HOME/proxy-checker/files:/program/files --name proxy-checker ghcr.io/secord0/proxy-checker:main
+```
+6. Open the `result.xlsx` file and look at the result of the program.
+
+
+<h2><p align="center">Docker (building)</p></h2>
 
 1. Install Docker, in Ubuntu you can use the command:
 ```sh
@@ -148,12 +185,12 @@ username:password@ip:port
 ip:port:username:password
 ```
 7. Configure the `settings.json`:
-- `threads` — the number of threads;
-- `timeout` — request timeout when checking the availability of the site;
-- `proxies_type` — a proxies type (either `http` or `socks5`);
-- `parse_ip_info` — whether to parse IP information (either `true` or `false`);
-- `parse_provider_info` — whether to parse Internet service provider information (either `true` or `false`);
-- `check_accessibility` — list of sites to check for accessibility.
+   - `threads` — the number of threads;
+   - `timeout` — request timeout when checking the availability of the site;
+   - `proxies_type` — a proxies type (either `http` or `socks5`);
+   - `parse_ip_info` — whether to parse IP information (either `true` or `false`);
+   - `parse_provider_info` — whether to parse Internet service provider information (either `true` or `false`);
+   - `check_accessibility` — list of sites to check for accessibility.
 8. Run the program again and wait until it's finished:
 ```sh
 docker run -it --rm -v $HOME/proxy-checker/:/program --name proxy-checker proxy-checker
@@ -163,7 +200,7 @@ docker run -it --rm -v $HOME/proxy-checker/:/program --name proxy-checker proxy-
 
 <h2><p align="center">Source code</p></h2>
 
-1. Install [Python](https://www.python.org/downloads/).
+1. Install [Python 3.8](https://www.python.org/downloads/).
 2. Clone the repository:
 ```sh
 git clone https://github.com/SecorD0/proxy-checker
@@ -184,12 +221,12 @@ username:password@ip:port
 ip:port:username:password
 ```
 8. Configure the `settings.json`:
-- `threads` — the number of threads;
-- `timeout` — request timeout when checking the availability of the site;
-- `proxies_type` — a proxies type (either `http` or `socks5`);
-- `parse_ip_info` — whether to parse IP information (either `true` or `false`);
-- `parse_provider_info` — whether to parse Internet service provider information (either `true` or `false`);
-- `check_accessibility` — list of sites to check for accessibility.
+   - `threads` — the number of threads;
+   - `timeout` — request timeout when checking the availability of the site;
+   - `proxies_type` — a proxies type (either `http` or `socks5`);
+   - `parse_ip_info` — whether to parse IP information (either `true` or `false`);
+   - `parse_provider_info` — whether to parse Internet service provider information (either `true` or `false`);
+   - `check_accessibility` — list of sites to check for accessibility.
 9. Run the `app.py` again and wait until it's finished.
 10. Open the `result.xlsx` file and look at the result of the program.
 
@@ -206,6 +243,88 @@ pyinstaller app.py -Fn proxy-checker -i images/icons/app.ico --add-binary "image
 
 
 
+<h1><p align="center">Updating</p></h1>
+<p align="right"><a href="#Content">To the content</a></p>
+
+
+<h2><p align="center">Windows</p></h2>
+
+1. Download an EXE file of the new version from the [releases page](https://github.com/SecorD0/proxy-checker/releases) and replace the old one with it.
+
+
+<h2><p align="center">GitHub image</p></h2>
+
+1. Stop the container:
+```sh
+docker stop proxy-checker
+```
+2. Remove the container:
+```sh
+docker rm proxy-checker
+```
+3. Update the image:
+```sh
+docker pull ghcr.io/secord0/proxy-checker:main
+```
+
+
+<h2><p align="center">Self-built image</p></h2>
+
+1. Stop the container:
+```sh
+docker stop proxy-checker
+```
+2. Remove the container:
+```sh
+docker rm proxy-checker
+```
+3. Go to the repository:
+```sh
+cd proxy-checker
+```
+4. Update the local files:
+```sh
+git pull
+```
+5. Rebuild the image:
+```sh
+docker build -t proxy-checker .
+```
+
+
+<h2><p align="center">Source code</p></h2>
+
+1. Go to the repository:
+```sh
+cd proxy-checker
+```
+2. Update the local files:
+```sh
+git pull
+```
+
+
+
+<h1><p align="center">Useful commands</p></h1>
+<p align="right"><a href="#Content">To the content</a></p>
+
+⠀To run the program (GitHub image):
+```sh
+docker run -it --rm -v $HOME/proxy-checker/files:/program/files --name proxy-checker ghcr.io/secord0/proxy-checker:main
+```
+
+⠀To run the program (self-built image):
+```sh
+docker run -it --rm -v $HOME/proxy-checker/:/program --name proxy-checker proxy-checker
+```
+
+⠀To remove the container:
+```sh
+docker stop proxy-checker; docker rm proxy-checker
+```
+
+
+
 <h1><p align="center">Report a bug or suggest an idea</p></h1>
 <p align="right"><a href="#Content">To the content</a></p>
 
@@ -217,7 +336,7 @@ pyinstaller app.py -Fn proxy-checker -i images/icons/app.ico --add-binary "image
 <p align="right"><a href="#Content">To the content</a></p>
 
 ⠀You can express your gratitude to the developer by sending fund to crypto wallets!
-- Ethereum-like address (Ethereum, BSC, Moonbeam, etc.): `0x900649087b8D7b9f799F880427DacCF2286D8F20`
+- Address of EVM networks (Ethereum, Polygon, BSC, etc.): `0x900649087b8D7b9f799F880427DacCF2286D8F20`
 - USDT TRC-20: `TNpBdjcmR5KzMVCBJTRYMJp16gCkQHu84K`
 - SOL: `DoZpXzGj5rEZVhEVzYdtwpzbXR8ifk5bajHybAmZvR4H`
 - BTC: `bc1qs4a0c3fntlhzn9j297qdsh3splcju54xscjstc`
